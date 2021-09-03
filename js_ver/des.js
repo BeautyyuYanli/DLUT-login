@@ -865,3 +865,4 @@ function generateKeys(keyByte) {
     }
     return keys;
 }
+module.exports = {strEnc, strDec}
