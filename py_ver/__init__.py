@@ -1,12 +1,13 @@
 from . import des
 import requests
 
-def initial(initUrl):
+def initial(initUrl, id):
     s = requests.Session()
     response = s.get(initUrl)
     al = 'LT{}cas'.format(response.text.split('LT')[1].split('cas')[0])
-    be = response.text.split('action="')[1].split('"')[0]
-    return s, al, be
+    s.cookies.set('dlut_cas_un', id)
+    s.cookies.set('cas_hash', "")
+    return s, al
 
 def constructPara(id, passwd, lt):
     al = {
@@ -21,13 +22,13 @@ def constructPara(id, passwd, lt):
     return '&'.join([i+'='+j for i, j in al.items()])
 
 def login(id, passwd):
-    baseUrl = 'https://webvpn.dlut.edu.cn'
-    # baseUrl = 'https://sso.dlut.edu.cn'
-    s, lt, buttonLink = initial('https://webvpn.dlut.edu.cn/login?cas_login=true')
+    targetUrl = 'https://sso.dlut.edu.cn/cas/login?service=http://seat.lib.dlut.edu.cn/yanxiujian/client/login.php?redirect=index.php'
+    s, lt = initial(targetUrl, id)
     s.headers = {
-        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:83.0) Gecko/20100101 Firefox/83.0',
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8'
     }
-    res = s.post(baseUrl + buttonLink, constructPara(id, passwd, lt), headers={'Content-Type': 'application/x-www-form-urlencoded'})
+    res = s.post(targetUrl, constructPara(id, passwd, lt), headers={'Content-Type': 'application/x-www-form-urlencoded'})
     return s
 
 if __name__ == '__main__':
