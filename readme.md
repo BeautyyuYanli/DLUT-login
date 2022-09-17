@@ -6,10 +6,6 @@
 - python 版本的 [demo](./demo.py) 和 [source](./py_ver/__init__.py)
 - javascript 版本的 [demo](./demo.js) 和 [source](./js_ver/index.js)
 - java 版本的[source](./java_ver/desEncrypt.java)
-    - java版本可在修改包名```com.demo.demo.java_ver```后引用至安卓项目,调用```strEnc```函数即可使用
-    - 因为是登录模块，删除了解码部分
-    - java: ```desEncrypt des = new desEncrypt();```
-    - kotlin: ```val des: desEncrypt = desEncrypt()```
 
 (ps: [js_ver/des.js](./js_ver/des.js) 是学校网信中心不知道哪抄来的远古代码. [py_ver/des.py](./py_ver/des.py) 是我掉了大把头发人工翻译的 py 代码. 求求您点个星吧)
 
